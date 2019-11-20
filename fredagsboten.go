@@ -43,13 +43,13 @@ func handleRequest(ctx context.Context) (string, error) {
 		return "", err
 	}
 
-	http.Post(
+	_, err = http.Post(
 		os.Getenv("SLACK_WEBHOOK_URL"),
 		"application/json",
 		bytes.NewBuffer(resBody),
 	)
 
-	return "", nil
+	return "", err
 }
 
 func main() {
