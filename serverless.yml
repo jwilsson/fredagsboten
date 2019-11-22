@@ -1,0 +1,35 @@
+service: fredagsboten
+
+provider:
+  name: aws
+  runtime: go1.x
+  region: eu-west-1
+  deploymentBucket:
+    blockPublicAccess: true
+
+functions:
+  fredagsboten:
+    handler: fredagsboten
+    environment:
+      DYNAMO_TABLE_NAME: ${env:DYNAMO_TABLE_NAME}
+      SLACK_WEBHOOK_URL: ${env:SLACK_WEBHOOK_URL}
+    events:
+      - schedule: cron(0 7 ? * FRI *)
+
+resources:
+  Resources:
+    fredagsboten:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${env:DYNAMO_TABLE_NAME}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: url
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
