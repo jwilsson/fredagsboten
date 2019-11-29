@@ -31,10 +31,10 @@ resources:
       Properties:
         TableName: ${env:DYNAMO_TABLE_NAME}
         AttributeDefinitions:
-          - AttributeName: id
+          - AttributeName: image_url
             AttributeType: S
         KeySchema:
-          - AttributeName: id
+          - AttributeName: image_url
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1

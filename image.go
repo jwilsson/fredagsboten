@@ -8,8 +8,7 @@ import (
 )
 
 type Image struct {
-	Id  string `json:"id" dynamodbav:"id"`
-	URL string `json:"url" dynamodbav:"url"`
+	URL string `json:"image_url" dynamodbav:"image_url"`
 }
 
 func fetchImages(tableName string) ([]Image, error) {
