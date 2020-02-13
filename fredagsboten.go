@@ -1,25 +1,14 @@
 package main
 
 import (
-	"bytes"
 	"context"
-	"encoding/json"
 	"math/rand"
-	"net/http"
 	"os"
 	"time"
 
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/nlopes/slack"
 )
-
-type Attachment struct {
-	Fallback string `json:"fallback"`
-	ImageURL string `json:"image_url"`
-}
-
-type Body struct {
-	Attachments []*Attachment `json:"attachments"`
-}
 
 func handleRequest(ctx context.Context) (string, error) {
 	rand.Seed(time.Now().UnixNano())
@@ -30,23 +19,16 @@ func handleRequest(ctx context.Context) (string, error) {
 	}
 
 	index := rand.Intn(len(images))
-	resBody, err := json.Marshal(Body{
-		Attachments: []*Attachment{
-			&Attachment{
-				Fallback: "Det är fredag mina bekanta",
-				ImageURL: images[index].URL,
-			},
-		},
-	})
-
-	if err != nil {
-		return "", err
+	attachment := slack.Attachment{
+		Fallback: "Det är fredag mina bekanta",
+		ImageURL: images[index].URL,
 	}
 
-	_, err = http.Post(
+	err = slack.PostWebhook(
 		os.Getenv("SLACK_WEBHOOK_URL"),
-		"application/json",
-		bytes.NewBuffer(resBody),
+		&slack.WebhookMessage{
+			Attachments: []slack.Attachment{attachment},
+		},
 	)
 
 	return "", err
