@@ -10,6 +10,8 @@ import (
 	"github.com/slack-go/slack"
 )
 
+const fallbackText = "Det är fredag mina bekanta"
+
 func handleRequest(ctx context.Context) (string, error) {
 	rand.Seed(time.Now().UnixNano())
 
@@ -19,15 +21,15 @@ func handleRequest(ctx context.Context) (string, error) {
 	}
 
 	index := rand.Intn(len(images))
-	attachment := slack.Attachment{
-		Fallback: "Det är fredag mina bekanta",
-		ImageURL: images[index].URL,
-	}
+	block := slack.NewImageBlock(images[index].URL, fallbackText, "", nil)
 
 	err = slack.PostWebhook(
 		os.Getenv("SLACK_WEBHOOK_URL"),
 		&slack.WebhookMessage{
-			Attachments: []slack.Attachment{attachment},
+			Blocks: &slack.Blocks{
+				BlockSet: []slack.Block{block},
+			},
+			Text: fallbackText,
 		},
 	)
 
