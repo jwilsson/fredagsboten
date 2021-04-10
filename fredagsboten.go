@@ -7,12 +7,17 @@ import (
 	"time"
 
 	"github.com/aws/aws-lambda-go/lambda"
+	utils "github.com/jwilsson/go-bot-utils"
 	"github.com/slack-go/slack"
 )
 
 const fallbackText = "Det är fredag mina bekanta"
 
 func handleRequest(ctx context.Context) (string, error) {
+	if utils.IsHoliday(time.Now()) {
+		return "", nil
+	}
+
 	rand.Seed(time.Now().UnixNano())
 
 	images, err := fetchImages(os.Getenv("DYNAMO_TABLE_NAME"))
