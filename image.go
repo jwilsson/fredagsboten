@@ -11,7 +11,7 @@ type Image struct {
 	URL string `json:"image_url" dynamodbav:"image_url"`
 }
 
-func fetchImages(tableName string) ([]Image, error) {
+func fetchImages(tableName string) (images []Image, err error) {
 	svc := dynamodb.New(session.New())
 	result, err := svc.Scan(&dynamodb.ScanInput{
 		TableName: aws.String(tableName),
@@ -20,8 +20,6 @@ func fetchImages(tableName string) ([]Image, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	var images []Image
 
 	err = dynamodbattribute.UnmarshalListOfMaps(result.Items, &images)
 	if err != nil {
