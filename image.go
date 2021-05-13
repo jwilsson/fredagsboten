@@ -12,7 +12,12 @@ type Image struct {
 }
 
 func fetchImages(tableName string) (images []Image, err error) {
-	svc := dynamodb.New(session.New())
+	session, err := session.NewSession()
+	if err != nil {
+		return nil, err
+	}
+
+	svc := dynamodb.New(session)
 	result, err := svc.Scan(&dynamodb.ScanInput{
 		TableName: aws.String(tableName),
 	})
