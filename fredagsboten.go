@@ -7,20 +7,34 @@ import (
 	"time"
 
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/aws/aws-sdk-go/aws/session"
 	utils "github.com/jwilsson/go-bot-utils"
 	"github.com/slack-go/slack"
 )
 
+type Image struct {
+	URL string `json:"image_url" dynamodbav:"image_url"`
+}
+
 const fallbackText = "Det är fredag mina bekanta"
 
-func handleRequest(ctx context.Context) (string, error) {
-	if utils.IsHoliday(time.Now()) {
+func handleRequest(ctx context.Context) (result string, err error) {
+	now := time.Now()
+
+	if utils.IsHoliday(now) {
 		return "", nil
 	}
 
-	rand.Seed(time.Now().UnixNano())
+	rand.Seed(now.UnixNano())
 
-	images, err := fetchImages(os.Getenv("DYNAMO_TABLE_NAME"))
+	s, err := session.NewSession()
+	if err != nil {
+		return "", err
+	}
+
+	var images []Image
+
+	err = utils.GetDynamodbData(s, os.Getenv("DYNAMO_TABLE_NAME"), &images)
 	if err != nil {
 		return "", err
 	}
