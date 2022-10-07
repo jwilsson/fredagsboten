@@ -18,14 +18,12 @@ type Image struct {
 
 const fallbackText = "Det är fredag mina bekanta"
 
-func handleRequest(ctx context.Context) (result string, err error) {
+func handleRequest(ctx context.Context) (string, error) {
 	now := time.Now()
 
 	if utils.IsHoliday(now) {
 		return "", nil
 	}
-
-	rand.Seed(now.UnixNano())
 
 	s, err := session.NewSession()
 	if err != nil {
@@ -38,6 +36,8 @@ func handleRequest(ctx context.Context) (result string, err error) {
 	if err != nil {
 		return "", err
 	}
+
+	rand.Seed(now.UnixNano())
 
 	index := rand.Intn(len(images))
 	block := slack.NewImageBlock(images[index].URL, fallbackText, "", nil)
