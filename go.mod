@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/aws/aws-lambda-go v1.34.1
 	github.com/aws/aws-sdk-go v1.44.113
-	github.com/jwilsson/go-bot-utils v1.11.0
+	github.com/jwilsson/go-bot-utils v1.12.0
 	github.com/slack-go/slack v0.11.3
 )
 

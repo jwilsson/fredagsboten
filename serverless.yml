@@ -21,8 +21,10 @@ functions:
     environment:
       DYNAMO_TABLE_NAME: ${env:DYNAMO_TABLE_NAME}
       SLACK_WEBHOOK_URL: ${env:SLACK_WEBHOOK_URL}
+      RUN_AT_TIME: 08:00
+      TARGET_TIMEZONE: Europe/Stockholm
     events:
-      - schedule: cron(0 7 ? * FRI *)
+      - schedule: cron(0 * ? * FRI *)
 
 resources:
   Resources:
