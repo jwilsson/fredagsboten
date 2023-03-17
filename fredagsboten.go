@@ -2,14 +2,13 @@ package main
 
 import (
 	"context"
-	"math/rand"
+
 	"os"
 	"time"
 
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws/session"
 	utils "github.com/jwilsson/go-bot-utils"
-	"github.com/slack-go/slack"
 )
 
 type Image struct {
@@ -35,18 +34,7 @@ func handleRequest(ctx context.Context) (string, error) {
 		return "", err
 	}
 
-	index := rand.Intn(len(images))
-	block := slack.NewImageBlock(images[index].URL, fallbackText, "", nil)
-
-	err = slack.PostWebhook(
-		os.Getenv("SLACK_WEBHOOK_URL"),
-		&slack.WebhookMessage{
-			Blocks: &slack.Blocks{
-				BlockSet: []slack.Block{block},
-			},
-			Text: fallbackText,
-		},
-	)
+	err = sendMessage(os.Getenv("SLACK_WEBHOOK_URL"), images)
 
 	return "", err
 }
