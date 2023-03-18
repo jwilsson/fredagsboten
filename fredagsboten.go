@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/aws/aws-sdk-go/aws/session"
+
 	utils "github.com/jwilsson/go-bot-utils"
 )
 
@@ -22,14 +22,7 @@ func handleRequest(ctx context.Context) (string, error) {
 		return "", nil
 	}
 
-	s, err := session.NewSession()
-	if err != nil {
-		return "", err
-	}
-
-	var images []Image
-
-	err = utils.GetDynamodbData(s, os.Getenv("DYNAMO_TABLE_NAME"), &images)
+	images, err := getImages(os.Getenv("DYNAMO_TABLE_NAME"))
 	if err != nil {
 		return "", err
 	}
