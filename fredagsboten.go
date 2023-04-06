@@ -22,7 +22,7 @@ func handleRequest(ctx context.Context) (string, error) {
 		return "", nil
 	}
 
-	images, err := getImages(os.Getenv("DYNAMO_TABLE_NAME"), ctx)
+	images, err := getImages(ctx, os.Getenv("DYNAMO_TABLE_NAME"))
 	if err != nil {
 		return "", err
 	}

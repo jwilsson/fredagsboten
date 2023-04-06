@@ -8,13 +8,13 @@ import (
 	utils "github.com/jwilsson/go-bot-utils"
 )
 
-func getImages(tableName string, ctx context.Context) (images []Image, err error) {
+func getImages(ctx context.Context, tableName string) (images []Image, err error) {
 	cfg, err := config.LoadDefaultConfig(ctx)
 	if err != nil {
 		return images, err
 	}
 
-	err = utils.GetDynamodbData(cfg, ctx, tableName, &images)
+	err = utils.GetDynamodbData(ctx, cfg, tableName, &images)
 
 	return images, err
 }
