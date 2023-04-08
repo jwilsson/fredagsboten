@@ -4,14 +4,16 @@ provider:
   name: aws
   runtime: go1.x
   region: eu-west-1
-  iamRoleStatements:
-    - Effect: 'Allow'
-      Action:
-        - 'dynamodb:Scan'
-      Resource:
-        Fn::GetAtt:
-          - fredagsboten
-          - Arn
+  iam:
+    role:
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - 'dynamodb:Scan'
+          Resource:
+            Fn::GetAtt:
+              - fredagsboten
+              - Arn
   deploymentBucket:
     blockPublicAccess: true
 
