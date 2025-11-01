@@ -1,0 +1,34 @@
+{
+  "version": "48.0.0",
+  "files": {
+    "9a5c8f4d135099b2230c63eef7d946e93efb433c7ffb51dfa04c2e53e223ad2b": {
+      "displayName": "FredagsbotenFunction/Code",
+      "source": {
+        "path": "asset.9a5c8f4d135099b2230c63eef7d946e93efb433c7ffb51dfa04c2e53e223ad2b",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "current_account-current_region-0fb12b54": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "9a5c8f4d135099b2230c63eef7d946e93efb433c7ffb51dfa04c2e53e223ad2b.zip",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    },
+    "3ce76b569fe3090a601d3d801cd568cf3da0cfb3d9d5fd67a1e2eb8a36cfcfe4": {
+      "displayName": "FredagsbotenStack Template",
+      "source": {
+        "path": "FredagsbotenStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region-3dec93d4": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "3ce76b569fe3090a601d3d801cd568cf3da0cfb3d9d5fd67a1e2eb8a36cfcfe4.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
