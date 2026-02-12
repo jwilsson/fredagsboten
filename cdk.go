@@ -35,7 +35,7 @@ func NewFredagsbotenStack(scope constructs.Construct, id string, props *StackPro
 
 	function := awslambda.NewFunction(stack, jsii.String("FredagsbotenFunction"), &awslambda.FunctionProps{
 		Architecture: awslambda.Architecture_ARM_64(),
-		Runtime:      awslambda.Runtime_PROVIDED_AL2(),
+		Runtime:      awslambda.Runtime_PROVIDED_AL2023(),
 		Handler:      jsii.String("bootstrap"),
 		Code:         awslambda.Code_FromAsset(jsii.String("./app/build/"), nil),
 		Environment: &map[string]*string{
